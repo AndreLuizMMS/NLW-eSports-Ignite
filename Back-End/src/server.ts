@@ -1,16 +1,46 @@
 import express from "express"
+import {PrismaClient} from '@prisma/client'
 
 const app = express()
+const prisma = new PrismaClient()
 
-app.get('/perfil', (req, res) => {
-  return res.json([
-    { id: 1, ad: 'game 1' },
-    { id: 2, ad: 'game 2' },
-    { id: 3, ad: 'game 3' },
-    { id: 4, ad: 'game 4' }
-  ])
+app.get('/games', async (req, res) => {
+
+  const games = await prisma.game.findMany({
+    include: {
+      _count: {
+        select: {
+          ads: true
+        }
+      }
+    }
+  })
+
+  return res.json(games) 
+})
+
+app.post('/ads', (req, res) => {
+  return res.status(201).json([])
 })
 
 
-// localhost:3333/perfil
+app.get('/games/:id/ads', async(req, res) => {
+
+ const gameId = req.params.id
+
+ const ads = await prisma.ad.findMany({
+  where: {
+    gameId
+  }
+ })
+
+  return res.json(ads)
+})
+
+app.get('/ads/:id/discord', (req, res) => {
+  return res.json([])
+})
+
+
+// localhost:3333/ads
 app.listen(3333)
