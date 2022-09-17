@@ -16,7 +16,7 @@ export function ButtonBanner() {
 
         <Dialog.Trigger className="py-3 px-4 bg-violet-600 hover:bg-violet-700 text-white rounded-md flex items-center gap-4">
           <MagnifyingGlassPlus size={24} />
-          Publicar anúncio
+          <span className='font-semibold text-lg'>Publicar anúncio</span>
         </Dialog.Trigger>
       </div>
     </div>
